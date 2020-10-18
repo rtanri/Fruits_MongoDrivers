@@ -4,38 +4,24 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true, useUnifiedTopology: true });
 
+// create a new Schema, foundation of all data added
+const fruitSchema = new mongoose.Schema ({
+    name: String,
+    rating: Number,
+    review: String,
+});
 
+const Fruit =  mongoose.model("Fruit", fruitSchema);
 
-const insertDocuments = function(db, callback){
-    // Get the document collection, with location - db.collection.insertMany
-    const collection = db.collection('fruits');
-    // insert some documents
-    collection.insertMany([
-        {
-            name: "Apple",
-            score: 8,
-            review: "Great fruit"
-        }, 
-        {
-            name: "Orange",
-            score: 6,
-            review: "Kinda Sour"
-        },  
-        {
-            name: "Banana",
-            score: 9,
-            review: "Healthy Stuff"
-        }
-    ], function(err, result){
-        // these is to ensure no errors
-        assert.equal(err, null);
-        assert.equal(3, result.result.n);
-        assert.equal(3, result.ops.length);
-        console.log("Inserted 3 documents into the collections");
-        callback(result);
-    }
-    );
-}
+const fruit = new Fruit({
+    name:"Apple",
+    rating: 7,
+    review: "Pretty solid as a fruit."
+});
+
+// to save 'fruit' in 'Fruit' collection in fruitsDB
+fruit.save();
+
 
 const findDocuments = function(db, callback){
     const collection = db.collection('fruits');
