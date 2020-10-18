@@ -19,9 +19,14 @@ client.connect(function(err){
     const db = client.db(dbName);
     
     // insert DOcuments of 3 fruits below, and then close the connection to database
-    insertDocuments(db, function(){
+    // insertDocuments(db, function(){
+    //     client.close();
+    // })
+
+    // Find the documents
+    findDocuments(db, function(){
         client.close();
-    })
+    });
 });
 
 
@@ -55,4 +60,14 @@ const insertDocuments = function(db, callback){
         callback(result);
     }
     );
+}
+
+const findDocuments = function(db, callback){
+    const collection = db.collection('fruits');
+    collection.find({}).toArray(function(err, fruits){
+        assert.equal(err, null);
+        console.log("Found the following records");
+        console.log(fruits);
+        callback(fruits);
+    });
 }
