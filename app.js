@@ -1,33 +1,8 @@
 //jshint esversion:6
 
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+const mongoose = require('mongoose');
 
-// Connection to URL
-const url = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'fruitsDB';
-
-//Create a new MongoClient
-const client = new MongoClient(url, { useUnifiedTopology: true });
-
-// Use connect method to connect to the Server
-client.connect(function(err){
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-    const db = client.db(dbName);
-    
-    // insert DOcuments of 3 fruits below, and then close the connection to database
-    // insertDocuments(db, function(){
-    //     client.close();
-    // })
-
-    // Find the documents
-    findDocuments(db, function(){
-        client.close();
-    });
-});
+mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
