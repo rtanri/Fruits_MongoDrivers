@@ -17,18 +17,37 @@ client.connect(function(err){
     assert.equal(null, err);
     console.log("Connected successfully to server");
     const db = client.db(dbName);
-    client.close();
+    
+    // insert DOcuments of 3 fruits below, and then close the connection to database
+    insertDocuments(db, function(){
+        client.close();
+    })
 });
 
 
 
 const insertDocuments = function(db, callback){
-    // Get the document collection
+    // Get the document collection, with location - db.collection.insertMany
     const collection = db.collection('fruits');
     // insert some documents
     collection.insertMany([
-        {a:1}, {a:2}, {a:3}
+        {
+            name: "Apple",
+            score: 8,
+            review: "Great fruit"
+        }, 
+        {
+            name: "Orange",
+            score: 6,
+            review: "Kinda Sour"
+        },  
+        {
+            name: "Banana",
+            score: 9,
+            review: "Healthy Stuff"
+        }
     ], function(err, result){
+        // these is to ensure no errors
         assert.equal(err, null);
         assert.equal(3, result.result.n);
         assert.equal(3, result.ops.length);
