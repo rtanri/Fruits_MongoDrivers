@@ -6,8 +6,15 @@ mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true, 
 
 // 1. Create a new Schema, foundation of all data added
 const fruitSchema = new mongoose.Schema ({
-    name: String,
-    rating: Number,
+    name: {
+        type: String,
+        required: [true, "Please check your data entry, no name specified!"]
+    },
+    rating: {
+        type: Number,
+         min: 1,
+         max: 10
+    },
     review: String,
 });
 
@@ -16,14 +23,13 @@ const Fruit =  mongoose.model("Fruit", fruitSchema);
 
 // 3. Create new fruit with values
 const fruit = new Fruit({
-    name:"Apple",
-    rating: 7,
-    review: "Pretty solid as a fruit."
+    rating: 4,
+    review: "Peach is very nice"
 });
 
 
 // 4. to save 'fruit' in 'Fruit' collection in fruitsDB
-// fruit.save();
+fruit.save();
 
 // 1. Set the Schema to alert/prevent errors
 const personSchema = new mongoose.Schema ({
