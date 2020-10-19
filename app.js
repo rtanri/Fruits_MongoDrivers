@@ -41,7 +41,7 @@ const person = new Person({
 });
 
 // 4. Save in db
-person.save();
+// person.save();
 
 
 const kiwi = new Fruit({
@@ -62,20 +62,23 @@ const orange = new Fruit({
     review: "Very Sour!"
 });
 
-Fruit.insertMany([kiwi, orange, banana], function(err){
-    if (err){
+// Fruit.insertMany([kiwi, orange, banana], function(err){
+//     if (err){
+//         console.log(err);
+//     } else {
+//         console.log("Successfully saved all fruits in fruitsDB")
+//     }
+// })
+
+Fruit.find(function(err, fruits){
+    if(err){
         console.log(err);
     } else {
-        console.log("Successfully saved all fruits in fruitsDB")
-    }
-})
 
-const findDocuments = function(db, callback){
-    const collection = db.collection('fruits');
-    collection.find({}).toArray(function(err, fruits){
-        assert.equal(err, null);
-        console.log("Found the following records");
-        console.log(fruits);
-        callback(fruits);
-    });
-}
+        mongoose.connection.close(); //automaticly close the mongodb connection
+
+        fruits.forEach(function(fruit){
+            console.log(fruit.name);
+        });
+    }
+});
