@@ -90,11 +90,27 @@ Fruit.find(function(err, fruits){
     }
 });
 
-// updateOne({id, what_do_you_want_to_update, callback function })
-Fruit.updateOne({_id: "5f8c59462a8ada7fc5121aff"}, {name:"Watermelon"}, function (err){
+// updateOne({id, what_do_you_want_to_update, callback func })
+// Fruit.updateOne({_id: "5f8c59462a8ada7fc5121aff"}, {name:"Watermelon"}, function (err){
+//     if (err){
+//         console.log(err);
+//     } else {
+//         console.log("Succesfully update the document")
+//     }
+// })
+
+// Fruit.deleteOne({name: "Orange"}, function(err){
+//     if (err){
+//         console.log(err);
+//     } else {
+//         console.log("Successfully deleted the document");
+//     }
+// });
+
+Person.deleteMany({name: "Angela"}, function(err){
     if (err){
         console.log(err);
     } else {
-        console.log("Succesfully update the document")
+        console.log("Successfully deleted all the document");
     }
-})
+});
